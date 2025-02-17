@@ -21,17 +21,22 @@ while True:
         bbox = hand['bbox']
         centerpoint= hand['center']
 
+        fingers= detector.fingersUp(hand)
+        print(fingers)
         print(centerpoint[0])
+        print(HandType)
         time.sleep(0.1)
-        if centerpoint [0]>450:
+        if centerpoint [0]>450 and fingers == [1,1,1,1,1]:
             pyautogui.hotkey('ctrl', 'shift', 'tab')
             time.sleep(0.55)
 
-        if centerpoint [0]<100:
+        if centerpoint [0]<100 and fingers == [1,1,1,1,1]:
             pyautogui.hotkey('ctrl', 'tab')
             time.sleep(0.55)
-
-
+        if HandType== 'Left' and fingers == [0,1,1,0,0]:
+            pyautogui.press('volumeup')
+        if HandType== 'Left' and fingers == [0,1,0,0,0]:
+            pyautogui.press('volumedown')
 
 
     cv2.imshow('Video', img)
