@@ -5,7 +5,7 @@ tf.get_logger().setLevel('ERROR')
 import pyautogui
 import time
 
-# access to Web cam and recognizing hands
+# access to Webcam and recognizing hands
 cap = cv2.VideoCapture(0)
 detector = HandDetector(detectionCon=0.8, maxHands=2)
 
@@ -22,10 +22,21 @@ while True:
         centerpoint= hand['center']
 
         fingers= detector.fingersUp(hand)
-        print(fingers)
-        print(centerpoint[0])
-        print(HandType)
+        #print(fingers)
+        #print(centerpoint[0])
+        #print(HandType)
         time.sleep(0.1)
+        length, info, img = detector.findDistance(lmList[4][:2], lmList[8][:2], img)
+        a = length
+        print(a)
+        if HandType== 'Right' and a> 100:
+            pyautogui.scroll(50)
+        if HandType== 'Right' and a<60 :
+            pyautogui.scroll(-50)
+        if HandType== 'Left' and a> 100:
+            pyautogui.hotkey('ctrl', '+')
+        if HandType== 'Left' and 10<a<60 :
+            pyautogui.hotkey('ctrl', '-')
         if centerpoint [0]>450 and fingers == [1,1,1,1,1]:
             pyautogui.hotkey('ctrl', 'shift', 'tab')
             time.sleep(0.55)
